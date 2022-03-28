@@ -3,7 +3,7 @@ import * as service from "../../services/dislikes-service";
 import {useEffect, useState} from "react";
 
 const MyDislikes = () => {
-    const [likedTuits, setDislikedTuis] = useState([]);
+    const [dislikedTuits, setDislikedTuis] = useState([]);
     const findTuitsIDislike = () =>
         service.findAllTuitsDislikedByUser("me")
             .then((tuits) => setDislikedTuis(tuits));
@@ -11,7 +11,7 @@ const MyDislikes = () => {
     
     return(
         <div>
-            <Tuits tuits={likedTuits} refreshTuits={findTuitsIDislike}/>
+            <Tuits tuits={dislikedTuits} refreshTuits={findTuitsIDislike}/>
         </div>
     );
 };
