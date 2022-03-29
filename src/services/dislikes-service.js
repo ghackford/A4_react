@@ -27,3 +27,7 @@ export const countDislikes = (tid) =>
 export const deleteDislike = (did) =>
     api.delete(`${TUITS_API}/dislikes/${did}/delete`)
         .then(response => response.data);
+
+export const findDislikeById = (did) =>
+    api.get(`${BASE_URL}/api/dislikes/${did}`)
+        .then(response => response.data);
