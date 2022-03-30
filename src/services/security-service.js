@@ -13,9 +13,20 @@ export const register = (user) =>
     api.post(`${SECURITY_API}/register`, user)
         .then(response => response.data);
 
-export const login = (user) =>
-    api.post(`${SECURITY_API}/login`, user)
-        .then(response => response.data);
+// export const login = (user) =>
+    // api.post(`${SECURITY_API}/login`, user)
+    //     .then(response => response.data);
+
+export const login = (user) => {
+    console.log("login function");
+    console.log(user);
+    return api.post(`${SECURITY_API}/login`, user)
+        .then(response => {
+            console.log("login response from server:");
+            console.log(response);
+            return response.data;
+        });
+}
 
 export const logout = (user) =>
     api.post(`${SECURITY_API}/logout`, user)
