@@ -9,6 +9,18 @@ const api = axios.create({
     withCredentials: true
 });
 
+api.interceptors.request.use(request => {
+    console.log('Starting Request')
+    console.log(request)
+    return request
+})
+
+api.interceptors.response.use(response => {
+    console.log('Received response')
+    console.log(response)
+    return response
+})
+
 export const register = (user) =>
     api.post(`${SECURITY_API}/register`, user)
         .then(response => response.data);
