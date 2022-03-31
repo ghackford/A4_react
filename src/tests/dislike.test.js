@@ -1,3 +1,6 @@
+/**
+ * @file Dislike.test defines a series of tests around toggling the dislike button
+ */
 import {
     findDislikeById,
     findAllUsersThatDislikedTuit,
@@ -17,6 +20,11 @@ const dislikeUser = {
     email: 'dislike@testing.com'
 };
 
+/**
+ * This test creates two users, normalUser and dislikeUser. It creates
+ * a tuit for normalUser and has the dislikeUser dislike that tuit. The test
+ * verifies that the number of dislikes increases
+ */
 describe('userDislikesTuit', () => {
 
     beforeAll(() => {
@@ -51,6 +59,12 @@ describe('userDislikesTuit', () => {
     })
 });
 
+/**
+ * This test creates two users, normalUser and dislikeUser. It creates
+ * a tuit for normalUser and has the dislikeUser dislike that tuit. The test verifies
+ * that the dislike count for the tuit has increased, then has the dislikeUser toggle the
+ * dislike. The test then verifies that the dislike count for the tuit has decreased
+ */
 describe('userTogglesDislikeOff', () => {
     beforeAll(() => {
         deleteUsersByUsername(normalUser.username);
