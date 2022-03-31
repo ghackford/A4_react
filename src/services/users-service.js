@@ -22,6 +22,10 @@ export const deleteUsersByUsername = (username) =>
   axios.get(`${USERS_API}/username/${username}/delete`)
     .then(response => response.data);
 
+export const findUserByUsername = (username) =>
+  axios.get(`${USERS_API}/username/${username}`)
+    .then(response => response.data);
+
 const service = {
   findAllUsers
 }
