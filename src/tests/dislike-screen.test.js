@@ -1,24 +1,52 @@
-import {screen, render} from "@testing-library/react";
-import {HashRouter} from "react-router-dom";
-import {MyDislikes} from "../components/profile/my-dislikes";
-import axios from "axios";
+import {act, create} from 'react-test-renderer';
+import TuitStats from "../components/tuits/tuit-stats";
 
-jest.mock('axios');
+//tailoring sample code for dislikes
+test('stats render correctly', () => {
+  let stats = {
+    likes: 123,
+    replies: 234,
+    retuits: 345,
+    dislikes: 140
+  }
+  
+  const dislikeTuit = () => {
+    act(() => {
+      stats.dislikes++;
+      tuitStats.update(
+        <TuitStats
+          tuit={{stats: stats}}
+          dislikeTuit={() => {}}
+        />)
+    })
+  }
+  
+  let tuitStats
+  act(() => {
+    tuitStats = create(
+      <TuitStats
+        dislikeTuit={dislikeTuit}
+        tuit={{stats: stats}}/>
+    );
+  })
+  
+  const root = tuitStats.root;
+  const likesCounter = root.findByProps({className: 'ttr-stats-likes'})
+  const retuitsCounter = root.findByProps({className: 'ttr-stats-retuits'})
+  const repliesCounter = root.findByProps({className: 'ttr-stats-replies'})
+  const dislikesCounter = root.findByProps({className: 'ttr-stats-dislikes'})
+  const dislikeTuitButton = root.findByProps({className: 'ttr-dislike-tuit-click'})
 
-const dislikeTesterA = "62429377a917ced74552208b";
-const dislikeTesterB = "6242938da917ced74552208d";
-const dislikedTuit = "62429436a917ced74552208f";
-const dislikeObject = "624295ad5e7f4c02221d77ac";
-
-const MOCKED_DISLIKE = [
-    {_id: dislikeObject, tuit: dislikedTuit, dislikedBy: dislikeTesterB}
-];
-
-test('dislike list renders static dislike array', () => {
-    render(
-        <HashRouter>
-            <MyDislikes dislikes={MOCKED_DISLIKE}/>
-        </HashRouter>);
-    const linkElement = screen.getByText(/disliketesterA/i);
-    expect(linkElement).toBeInTheDocument();
+  let likesText = likesCounter.children[0];
+  const repliesText = repliesCounter.children[0];
+  const retuitsText = retuitsCounter.children[0];
+  let dislikesText = dislikesCounter.children[0];
+  expect(likesText).toBe('123');
+  expect(repliesText).toBe('234');
+  expect(retuitsText).toBe('345');
+  expect(dislikesText).toBe('140');
+  
+  act(() => {dislikeTuitButton.props.onClick()})
+  dislikesText = dislikesCounter.children[0];
+  expect(dislikesText).toBe('141');
 });
