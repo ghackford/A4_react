@@ -19,3 +19,15 @@ export const findAllUsersThatDislikedTuit = (tid) =>
 export const userDislikesTuit = (uid, tid) =>
     api.put(`${USERS_API}/${uid}/dislikes/${tid}`)
         .then(response => response.data);
+
+export const countDislikes = (tid) =>
+    api.get(`${TUITS_API}/${tid}/dislikes/count`)
+        .then(response => response.data);
+
+export const deleteDislike = (did) =>
+    api.delete(`${TUITS_API}/dislikes/${did}/delete`)
+        .then(response => response.data);
+
+export const findDislikeById = (did) =>
+    api.get(`${BASE_URL}/api/dislikes/${did}`)
+        .then(response => response.data);
